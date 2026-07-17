@@ -1,11 +1,12 @@
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 import { RESUME_PAPER_POSITION } from '../../data/projects';
 import { useT } from '../../i18n';
 import { pointerState } from '../../interactionState';
+import { useLightingStore } from '../../lightingStore';
 import { useViewStore } from '../../viewStore';
 import { ResumePaper } from './ResumePaper';
 
@@ -35,12 +36,20 @@ const worldDir = new THREE.Vector3();
 
 export function LaptopDesk({ project, position, rotationY = 0 }) {
   const [hovered, setHovered] = useState(false);
+  const isNight = useLightingStore((s) => s.isNight);
   const sitting = useViewStore((s) => s.sitting);
   const sit = useViewStore((s) => s.sit);
   const setScreenAnchor = useViewStore((s) => s.setScreenAnchor);
   const t = useT();
   const screenRef = useRef();
   const anchorCaptured = useRef(false);
+
+  // real screen bloom reads as a soft, mostly-white glow, not a flat wash
+  // of the screen's saturated hue — blend the light color toward white.
+  const glowColor = useMemo(
+    () => new THREE.Color(project.color).lerp(new THREE.Color('#ffffff'), 0.6),
+    [project.color]
+  );
 
   useFrame(() => {
     if (anchorCaptured.current || !screenRef.current) return;
@@ -120,7 +129,7 @@ export function LaptopDesk({ project, position, rotationY = 0 }) {
             <meshStandardMaterial
               color={project.color}
               emissive={project.color}
-              emissiveIntensity={hovered ? 1.4 : 0.8}
+              emissiveIntensity={hovered ? 1.4 : isNight ? 1.1 : 0.7}
               toneMapped={false}
             />
           </mesh>
@@ -167,9 +176,10 @@ export function LaptopDesk({ project, position, rotationY = 0 }) {
       </group>
 
       <pointLight
-        color={project.color}
-        intensity={hovered ? 5 : 2}
-        distance={3.5}
+        color={glowColor}
+        intensity={hovered ? 2.2 : isNight ? 1.3 : 0.7}
+        distance={1.8}
+        decay={2}
         position={[0, 1.3, -0.1]}
       />
 

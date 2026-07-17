@@ -14,6 +14,7 @@ import {
 } from '../data/projects';
 import { FirstPersonRig } from './FirstPersonRig';
 import { Ground } from './Ground';
+import { Lighting } from './Lighting';
 import { AwardsBoard } from './models/AwardsBoard';
 import { Chair } from './models/Chair';
 import { LaptopDesk } from './models/LaptopDesk';
@@ -22,15 +23,7 @@ import { Piano } from './models/Piano';
 export function Experience() {
   return (
     <Canvas shadows camera={{ fov: 50, position: [0, 1.5, 2.0] }}>
-      <color attach="background" args={['#05070d']} />
-      <fog attach="fog" args={['#05070d', 13, 24]} />
-      <ambientLight intensity={0.55} />
-      <directionalLight
-        position={[6, 10, 4]}
-        intensity={1.1}
-        castShadow
-        shadow-mapSize={[1024, 1024]}
-      />
+      <Lighting />
 
       <Suspense fallback={null}>
         <Ground />

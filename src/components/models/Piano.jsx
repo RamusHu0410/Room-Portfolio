@@ -4,6 +4,7 @@ import * as THREE from 'three';
 
 import { useT } from '../../i18n';
 import { pointerState } from '../../interactionState';
+import { useLightingStore } from '../../lightingStore';
 import { useVideoStore } from '../../videoStore';
 
 const CLICK_DRAG_THRESHOLD = 6;
@@ -64,6 +65,7 @@ function Leg({ position }) {
 
 export function Piano({ position, rotationY = 0 }) {
   const [hovered, setHovered] = useState(false);
+  const isNight = useLightingStore((s) => s.isNight);
   const openVideo = useVideoStore((s) => s.openVideo);
   const shape = usePianoShape();
   const { white, black } = useKeyLayout();
@@ -123,7 +125,7 @@ export function Piano({ position, rotationY = 0 }) {
 
         <pointLight
           color="#fff6e0"
-          intensity={hovered ? 3.2 : 2.2}
+          intensity={hovered ? 3.6 : isNight ? 2.6 : 1.4}
           distance={3}
           position={[0.3, LEG_HEIGHT + 1.1, -0.6]}
         />

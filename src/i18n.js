@@ -31,7 +31,8 @@ const translations = {
     'tag.piano': 'Piano Performance',
     'video.title': 'Piano Performance',
     'video.subtitle': 'A recording of one of my performances',
-    'video.watchOnYoutube': 'Watch on YouTube ↗'
+    'video.watchOnYoutube': 'Watch on YouTube ↗',
+    'tag.lightSwitch': 'Light Switch'
   },
   zh: {
     'hud.title': '房间作品集小宇宙',
@@ -63,7 +64,8 @@ const translations = {
     'tag.piano': '钢琴演奏',
     'video.title': '钢琴演奏',
     'video.subtitle': '我的一段演奏录像',
-    'video.watchOnYoutube': '在 YouTube 中观看 ↗'
+    'video.watchOnYoutube': '在 YouTube 中观看 ↗',
+    'tag.lightSwitch': '电灯开关'
   }
 };
 

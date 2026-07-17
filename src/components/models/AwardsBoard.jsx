@@ -4,11 +4,13 @@ import { useState } from 'react';
 import { useCertificateStore } from '../../certificateStore';
 import { useT } from '../../i18n';
 import { pointerState } from '../../interactionState';
+import { useLightingStore } from '../../lightingStore';
 
 const CLICK_DRAG_THRESHOLD = 6;
 
 export function AwardsBoard({ position, rotationY = 0 }) {
   const [hovered, setHovered] = useState(false);
+  const isNight = useLightingStore((s) => s.isNight);
   const openCertificates = useCertificateStore((s) => s.openCertificates);
   const t = useT();
 
@@ -40,8 +42,8 @@ export function AwardsBoard({ position, rotationY = 0 }) {
           <planeGeometry args={[0.56, 0.76]} />
           <meshStandardMaterial
             color="#f7f5f0"
-            emissive={hovered ? '#38bdf8' : '#000000'}
-            emissiveIntensity={hovered ? 0.25 : 0}
+            emissive={hovered ? '#38bdf8' : isNight ? '#ff2d88' : '#000000'}
+            emissiveIntensity={hovered ? 0.25 : isNight ? 0.12 : 0}
             roughness={0.9}
           />
         </mesh>

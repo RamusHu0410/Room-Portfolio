@@ -3,12 +3,14 @@ import * as THREE from 'three';
 
 import {
   DOOR_POSITION,
+  LIGHT_SWITCH_POSITION,
   ROOM_HALF_X,
   ROOM_HALF_Z,
   WINDOW_POSITION,
   WINDOW_SIZE
 } from '../data/projects';
 import { Door } from './models/Door';
+import { LightSwitch } from './models/LightSwitch';
 import { Window, WINDOW_FRAME_MARGIN } from './models/Window';
 
 const WALL_HEIGHT = 2.6;
@@ -188,6 +190,7 @@ export function Ground() {
 
       <Door position={DOOR_POSITION} />
       <Window position={WINDOW_POSITION} size={WINDOW_SIZE} />
+      <LightSwitch position={LIGHT_SWITCH_POSITION} />
     </group>
   );
 }
